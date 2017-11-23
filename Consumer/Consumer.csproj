@@ -40,7 +40,8 @@
     <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerServiceClient.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="CustomerApiClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
