@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PactPlayground
-{
-    public class Class1
-    {
-    }
+namespace Provider.Tests
+{	
+	public class Class1
+	{
+	}
 }
