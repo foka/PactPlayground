@@ -14,12 +14,12 @@ namespace Consumer.Tests
 		{
 			// Arrange
 			mockProviderService
-				.Given("There is a customer with id 69")
+				.Given("There is a customer with id 123")
 				.UponReceiving("A GET request to retrieve the customer")
 				.With(new ProviderServiceRequest
 				{
 					Method = HttpVerb.Get,
-					Path = "/customers/69",
+					Path = "/customers/123",
 					Headers = new Dictionary<string, object> { {"Accept", "application/json"} }
 				})
 				.WillRespondWith(new ProviderServiceResponse
@@ -28,22 +28,22 @@ namespace Consumer.Tests
 					Headers = new Dictionary<string, object> { {"Content-Type", "application/json; charset=utf-8"} },
 					Body = new
 					{
-						Id = 69,
-						FirstName = "Mateusz",
-						LastName = "Trzaskawka"
+						Id = 123,
+						FirstName = "Jan",
+						LastName = "Kowalski"
 					}
 				});
 			var client = new CustomerApiClient(mockProviderServiceBaseUri);
 
 			// Act
-			var customer = await client.GetCustomerByIdAsync(69);
+			var customer = await client.GetCustomerByIdAsync(123);
 
 			// Assert
 			customer.ShouldBeEquivalentTo(new Customer
 			{
-				Id = 69,
-				FirstName = "Mateusz",
-				LastName = "Trzaskawka"
+				Id = 123,
+				FirstName = "Jan",
+				LastName = "Kowalski"
 			});
 		}
 

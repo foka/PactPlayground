@@ -1,7 +1,4 @@
-﻿using System;
-using Nancy;
-using Nancy.Hosting.Self;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using PactNet;
 
 namespace Provider.Tests
@@ -12,16 +9,10 @@ namespace Provider.Tests
 		public void CustomerApiShouldHonourPactWithConsumer()
 		{
 			// Arrange
-			const string serviceUri = "http://localhost:9222";
-			var config = new PactVerifierConfig
-			{
-				// This allows the user to set a request header that will be sent with every request the verifier sends to the provider:
-				// CustomHeader = new KeyValuePair<string, string>("Authorization", "Basic VGVzdA=="),
-				// Output verbose verification logs to the test output:
-				Verbose = true
-			};
+			const string serviceUri = "http://localhost:9876";
+			var config = new PactVerifierConfig();
 
-			using (StartNancyHost(serviceUri))
+			using (NancyTestHost.Start(serviceUri))
 			{
 				// Act / Assert
 				new PactVerifier(config)
@@ -30,14 +21,6 @@ namespace Provider.Tests
 					.PactUri(@"..\..\..\pacts\consumer-customer_api.json")
 					.Verify();
 			}
-		}
-
-		private static NancyHost StartNancyHost(string serviceUri)
-		{
-			var hostConfig = new HostConfiguration { UrlReservations = new UrlReservations { CreateAutomatically = true }};
-			var nancyHost = new NancyHost(new Uri(serviceUri), new DefaultNancyBootstrapper(), hostConfig);
-			nancyHost.Start();
-			return nancyHost;
 		}
 	}
 }

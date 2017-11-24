@@ -8,10 +8,10 @@
   "interactions": [
     {
       "description": "A GET request to retrieve the customer",
-      "providerState": "There is a customer with id 69",
+      "providerState": "There is a customer with id 123",
       "request": {
         "method": "get",
-        "path": "/customers/69",
+        "path": "/customers/123",
         "headers": {
           "Accept": "application/json"
         }
@@ -22,9 +22,9 @@
           "Content-Type": "application/json; charset=utf-8"
         },
         "body": {
-          "Id": 69,
-          "FirstName": "Mateusz",
-          "LastName": "Trzaskawka"
+          "Id": 123,
+          "FirstName": "Jan",
+          "LastName": "Kowalski"
         }
       }
     }

@@ -19,7 +19,6 @@ namespace Consumer.Tests
 				.HasPactWith("Customer API");
 
 			MockProviderService = PactBuilder.MockService(MockServerPort);
-
 		}
 
 		public IPactBuilder PactBuilder { get; private set; }
