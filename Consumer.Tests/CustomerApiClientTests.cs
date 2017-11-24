@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using PactNet.Mocks.MockHttpService;
@@ -9,7 +10,7 @@ namespace Consumer.Tests
 	public class CustomerApiClientTests
 	{
 		[Test]
-		public void GetCustomerById_ReturnsExpectedCustomer()
+		public async Task GetCustomerByIdAsync_ReturnsExpectedCustomer()
 		{
 			// Arrange
 			mockProviderService
@@ -35,10 +36,10 @@ namespace Consumer.Tests
 			var client = new CustomerApiClient(mockProviderServiceBaseUri);
 
 			// Act
-			var customer = client.GetCustomerById(69);
+			var customer = await client.GetCustomerByIdAsync(69);
 
 			// Assert
-			customer.ShouldBeEquivalentTo(new Customer()
+			customer.ShouldBeEquivalentTo(new Customer
 			{
 				Id = 69,
 				FirstName = "Mateusz",

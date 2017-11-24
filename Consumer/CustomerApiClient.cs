@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Consumer
@@ -12,19 +13,19 @@ namespace Consumer
 			this.baseUri = baseUri;
 		}
 
-		public Customer GetCustomerById(int id)
+		public async Task<Customer> GetCustomerByIdAsync(int id)
 		{
-			using (var client = new HttpClient { BaseAddress = new Uri(baseUri) })
 			using (var request = new HttpRequestMessage(HttpMethod.Get, "/customers/" + id))
 			{
 				request.Headers.Add("Accept", "application/json");
 
-				using (var response = client.SendAsync(request).Result)
+				using (var client = new HttpClient { BaseAddress = new Uri(baseUri) })
+				using (var response = await client.SendAsync(request))
 				{
 					if (response.StatusCode != HttpStatusCode.OK)
 						throw new ApplicationException(response.ReasonPhrase);
 
-					var content = response.Content.ReadAsStringAsync().Result;
+					var content = await response.Content.ReadAsStringAsync();
 					return JsonConvert.DeserializeObject<Customer>(content);
 				}
 			}
