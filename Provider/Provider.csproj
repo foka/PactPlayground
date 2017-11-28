@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerApi.cs" />
+    <Compile Include="DbCustomer.cs" />
+    <Compile Include="ICustomerDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,9 @@ namespace Provider.Tests.TestCore
 {
 	public class NonScanningAutofacNancyBootstrapper : AutofacNancyBootstrapper
 	{
-		public NonScanningAutofacNancyBootstrapper(IContainer container) : base(container)
+		public NonScanningAutofacNancyBootstrapper(ILifetimeScope lifetimeScope) : base(lifetimeScope)
 		{
-			var nancyModuleTypes = GetRegisteredNancyModuleTypes(container.ComponentRegistry);
+			var nancyModuleTypes = GetRegisteredNancyModuleTypes(lifetimeScope.ComponentRegistry);
 
 			modules = nancyModuleTypes.Select(t => new ModuleRegistration(t)).ToArray();
 		}

@@ -11,16 +11,16 @@ namespace Provider.Tests.TestCore
 	{
 		// TODO: Tutaj na szybko wkleiłem rzeczy z Dotnetserverframework2014.
 		// Tam jest to w osobnej klasie Forcom.Server.Nancy.NancyAutofacAdapter
-		private readonly ILifetimeScope container;
+		private readonly ILifetimeScope lifetimeScope;
 
-		protected AutofacNancyBootstrapper(ILifetimeScope container)
+		protected AutofacNancyBootstrapper(ILifetimeScope lifetimeScope)
 		{
-			this.container = container;
+			this.lifetimeScope = lifetimeScope;
 		}
 
 		protected override ILifetimeScope GetApplicationContainer()
 		{
-			return container;
+			return lifetimeScope;
 		}
 
 		

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using FakeItEasy;
 using NUnit.Framework;
 using PactNet;
 using Provider.Tests.TestCore;
@@ -14,7 +15,7 @@ namespace Provider.Tests
 			const string serviceUri = "http://localhost:9876";
 			var config = new PactVerifierConfig();
 
-			using (NancyTestHost.Start(serviceUri, GetContainer()))
+			using (NancyTestHost.Start(serviceUri, GetLifetimeScope()))
 			{
 				// Act / Assert
 				new PactVerifier(config)
@@ -26,12 +27,13 @@ namespace Provider.Tests
 			}
 		}
 
-		private static IContainer GetContainer()
+		private static ILifetimeScope GetLifetimeScope()
 		{
 			var builder = new ContainerBuilder();
 
 			builder.RegisterType<CustomerApi>();
 			builder.RegisterType<CustomerApiStatesService>();
+			builder.RegisterInstance(A.Fake<ICustomerDao>()).SingleInstance();
 
 			return builder.Build();
 		}

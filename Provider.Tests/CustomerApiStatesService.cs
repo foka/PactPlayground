@@ -1,4 +1,5 @@
 ﻿using System;
+using FakeItEasy;
 using Nancy;
 using Nancy.ModelBinding;
 
@@ -6,8 +7,10 @@ namespace Provider.Tests
 {
 	public class CustomerApiStatesService : NancyModule
 	{
-		public CustomerApiStatesService() : base("/customer-provider-states")
+		public CustomerApiStatesService(ICustomerDao fakeCustomerDao)
+			: base("/customer-provider-states")
 		{
+			this.fakeCustomerDao = fakeCustomerDao;
 			Post[""] = o => PostState();
 		}
 
@@ -23,10 +26,18 @@ namespace Provider.Tests
 			switch (state)
 			{
 				case "There is a customer with id 123":
-					Console.Out.WriteLine("Would insert a customer with id 123...");
+					A.CallTo(() => fakeCustomerDao.GetCustomerById(123))
+						.Returns(new DbCustomer
+						{
+							Id = 123,
+							FirstName = "Jan",
+							LastName = "Kowalski"
+						});
 					break;
 			}
 		}
+
+		private readonly ICustomerDao fakeCustomerDao;
 
 		private class ProviderState
 		{

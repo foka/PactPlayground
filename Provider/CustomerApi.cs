@@ -4,19 +4,25 @@ namespace Provider
 {
 	public class CustomerApi : NancyModule
 	{
-		public CustomerApi() : base("customers")
+		public CustomerApi(ICustomerDao customerDao)
+			: base("customers")
 		{
 			Get["/{customerId}"] = o => GetCustomerById((int)o.customerId);
+
+			this.customerDao = customerDao;
 		}
 
 		private object GetCustomerById(int customerId)
 		{
-			return new 
+			var dbCustomer = customerDao.GetCustomerById(customerId);
+			return new
 			{
-				Id = 123,
-				FirstName = "Jan",
-				LastName = "Kowalski"
+				Id = dbCustomer.Id,
+				FirstName = dbCustomer.FirstName,
+				LastName = dbCustomer.LastName
 			};
 		}
+
+		private readonly ICustomerDao customerDao;
 	}
 }
