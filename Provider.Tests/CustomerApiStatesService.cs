@@ -1,5 +1,4 @@
-﻿using System;
-using FakeItEasy;
+﻿using FakeItEasy;
 using Nancy;
 using Nancy.ModelBinding;
 
@@ -33,6 +32,9 @@ namespace Provider.Tests
 							FirstName = "Jan",
 							LastName = "Kowalski"
 						});
+					break;
+				case "There is NO customer with id 124":
+					A.CallTo(() => fakeCustomerDao.GetCustomerById(124)).Returns(null);
 					break;
 			}
 		}

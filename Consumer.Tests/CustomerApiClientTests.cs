@@ -33,7 +33,6 @@ namespace Consumer.Tests
 						LastName = "Kowalski"
 					}
 				});
-			var client = new CustomerApiClient(mockProviderServiceBaseUri);
 
 			// Act
 			var customer = await client.GetCustomerByIdAsync(123);
@@ -47,7 +46,35 @@ namespace Consumer.Tests
 			});
 		}
 
-		[SetUp]
+		[Test]
+		public async Task GetCustomerByIdAsync_ReturnsNull_ForNotExistingCustomer()
+		{
+			// Arrange
+			mockProviderService
+				.Given("There is NO customer with id 124")
+				.UponReceiving("A GET request to retrieve the customer")
+				.With(new ProviderServiceRequest
+				{
+					Method = HttpVerb.Get,
+					Path = "/customers/124",
+					Headers = new Dictionary<string, object> { {"Accept", "application/json"} }
+				})
+				.WillRespondWith(new ProviderServiceResponse
+				{
+					Status = 404,
+					Headers = new Dictionary<string, object> { {"Content-Type", "application/json; charset=utf-8"} },
+					Body = null
+				});
+
+			// Act
+			var customer = await client.GetCustomerByIdAsync(124);
+
+			// Assert
+			customer.Should().BeNull();
+		}
+
+
+		[TestFixtureSetUp]
 		public void SetupPact()
 		{
 			pact = new CustomerApiPact();
@@ -55,9 +82,11 @@ namespace Consumer.Tests
 			// NOTE: Clears any previously registered interactions before the test is run
 			mockProviderService.ClearInteractions();
 			mockProviderServiceBaseUri = pact.MockProviderServiceBaseUri;
+
+			client = new CustomerApiClient(mockProviderServiceBaseUri);
 		}
 
-		[TearDown]
+		[TestFixtureTearDown]
 		public void SavePactFile()
 		{
 			pact.SavePactFile();
@@ -66,5 +95,6 @@ namespace Consumer.Tests
 		private CustomerApiPact pact;
 		private IMockProviderService mockProviderService;
 		private string mockProviderServiceBaseUri;
+		private CustomerApiClient client;
 	}
 }
