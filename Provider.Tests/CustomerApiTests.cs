@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Autofac;
+using NUnit.Framework;
 using PactNet;
+using Provider.Tests.TestCore;
 
 namespace Provider.Tests
 {
@@ -12,7 +14,7 @@ namespace Provider.Tests
 			const string serviceUri = "http://localhost:9876";
 			var config = new PactVerifierConfig();
 
-			using (NancyTestHost.Start(serviceUri))
+			using (NancyTestHost.Start(serviceUri, GetContainer()))
 			{
 				// Act / Assert
 				new PactVerifier(config)
@@ -22,6 +24,16 @@ namespace Provider.Tests
 					.PactUri(@"..\..\..\pacts\consumer-customer_api.json")
 					.Verify();
 			}
+		}
+
+		private static IContainer GetContainer()
+		{
+			var builder = new ContainerBuilder();
+
+			builder.RegisterType<CustomerApi>();
+			builder.RegisterType<CustomerApiStatesService>();
+
+			return builder.Build();
 		}
 	}
 }

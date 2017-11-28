@@ -1,15 +1,15 @@
 ﻿using System;
-using Nancy;
+using Autofac;
 using Nancy.Hosting.Self;
 
-namespace Provider.Tests
+namespace Provider.Tests.TestCore
 {
 	public class NancyTestHost
 	{
-		public static NancyHost Start(string serviceUri)
+		public static NancyHost Start(string serviceUri, IContainer container)
 		{
 			var hostConfig = new HostConfiguration { UrlReservations = new UrlReservations { CreateAutomatically = true }};
-			var nancyHost = new NancyHost(new Uri(serviceUri), new DefaultNancyBootstrapper(), hostConfig);
+			var nancyHost = new NancyHost(new Uri(serviceUri), new NonScanningAutofacNancyBootstrapper(container), hostConfig);
 			nancyHost.Start();
 			return nancyHost;
 		} 

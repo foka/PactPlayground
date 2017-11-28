@@ -2,9 +2,9 @@
 
 namespace Provider
 {
-	public class ConsumerApi : NancyModule
+	public class CustomerApi : NancyModule
 	{
-		public ConsumerApi() : base("customers")
+		public CustomerApi() : base("customers")
 		{
 			Get["/{customerId}"] = o => GetCustomerById((int)o.customerId);
 		}
