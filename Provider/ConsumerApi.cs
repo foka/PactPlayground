@@ -6,10 +6,10 @@ namespace Provider
 	{
 		public ConsumerApi() : base("customers")
 		{
-			Get["/{customerId}"] = o => GetCustomerById(o.customerId);
+			Get["/{customerId}"] = o => GetCustomerById((int)o.customerId);
 		}
 
-		private object GetCustomerById(object customerId)
+		private object GetCustomerById(int customerId)
 		{
 			return new 
 			{

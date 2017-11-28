@@ -16,6 +16,7 @@ namespace Provider.Tests
 			{
 				// Act / Assert
 				new PactVerifier(config)
+					.ProviderState(serviceUri + "/customer-provider-states")
 					.ServiceProvider("Customer API", serviceUri)
 					.HonoursPactWith("Consumer")
 					.PactUri(@"..\..\..\pacts\consumer-customer_api.json")
