@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
+using PactNet;
 using PactNet.Mocks.MockHttpService;
 using PactNet.Mocks.MockHttpService.Models;
 
@@ -90,6 +91,11 @@ namespace Consumer.Tests
 		public void SavePactFile()
 		{
 			pact.SavePactFile();
+
+			// TODO: To ma być krok w CI!
+			var pactPublisher = new PactPublisher("http://localhost");
+			pactPublisher.PublishToBroker(@"..\..\..\pacts\consumer-customer_api.json", "1.2.125", new [] {"dev"});
+
 		}
 
 		private CustomerApiPact pact;

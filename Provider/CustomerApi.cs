@@ -17,7 +17,7 @@ namespace Provider
 			var dbCustomer = customerDao.GetCustomerById(customerId);
 			if (dbCustomer == null)
 				return Negotiate.WithStatusCode(HttpStatusCode.NotFound);
-			
+
 			return new
 			{
 				Id = dbCustomer.Id,
