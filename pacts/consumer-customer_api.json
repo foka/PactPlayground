@@ -25,6 +25,12 @@
           "Id": 123,
           "FirstName": "Jan",
           "LastName": "Kowalski"
+        },
+        "matchingRules": {
+          "$.body.FirstName": {
+            "match": "regex",
+            "regex": "\\A\\w+\\z"
+          }
         }
       }
     },

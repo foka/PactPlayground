@@ -29,7 +29,7 @@ namespace Provider.Tests
 						.Returns(new DbCustomer
 						{
 							Id = 123,
-							FirstName = "Jan",
+							FirstName = "Tomasz", // Tomasz will pass cause there is regex matching, not exact value matching
 							LastName = "Kowalski"
 						});
 					break;

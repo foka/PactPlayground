@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using PactNet;
+using PactNet.Matchers;
+using PactNet.Matchers.Type;
 using PactNet.Mocks.MockHttpService;
 using PactNet.Mocks.MockHttpService.Models;
 
@@ -30,7 +32,7 @@ namespace Consumer.Tests
 					Body = new
 					{
 						Id = 123,
-						FirstName = "Jan",
+						FirstName = Match.Regex("Jan", @"\A\w+\z"),
 						LastName = "Kowalski"
 					}
 				});
